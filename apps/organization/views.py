@@ -6,10 +6,10 @@ from django.http import HttpResponse
 
 from .forms import UserAskForm
 from .models import CourseOrg, CityDict
-from course.models import Course
 from operation.models import UserFavorite
 # Create your views here.
 import json
+
 
 class OrgView(View):
     """

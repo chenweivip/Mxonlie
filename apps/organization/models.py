@@ -29,7 +29,6 @@ class CourseOrg(models.Model):
     address = models.CharField(max_length=150, verbose_name=u'机构地址')
     students = models.IntegerField(default=0, verbose_name=u'学习人数')
     course_nums = models.IntegerField(default=0, verbose_name=u'课程数')
-
     city = models.ForeignKey(CityDict, verbose_name=u'所在城市')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
     category = models.CharField(default=u'培训机构',verbose_name=u'机构类别',max_length=20,choices=(("pxjg", u"培训机构"),("gx", u"高校"),("gr", u"个人")))
@@ -41,6 +40,10 @@ class CourseOrg(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_teacher_nums(self):
+        """获取课程机构教师数量"""
+        return self.teacher_set.all().count()
+
 
 class Teacher(models.Model):
     org = models.ForeignKey(CourseOrg, verbose_name=u'所属机构')
@@ -51,7 +54,7 @@ class Teacher(models.Model):
     points = models.CharField(max_length=50, verbose_name=u'教学特点')
     click_nums = models.IntegerField(default=0, verbose_name=u'点击数')
     fav_nums = models.IntegerField(default=0, verbose_name=u'点赞数')
-    image = models.ImageField(default='',upload_to="teacher/%Y/%m", verbose_name=u'头像')
+    image = models.ImageField(default='', upload_to="teacher/%Y/%m", verbose_name=u'头像')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     def __unicode__(self):

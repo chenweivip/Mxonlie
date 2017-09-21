@@ -40,6 +40,9 @@ urlpatterns = [
     # 课程机构配置
     url(r'^org/', include('organization.urls',namespace="org")),
 
+    # 课程
+    url(r'^course/', include('course.urls', namespace="course")),
+
     # 配置上传文件路径
     url(r'media/(?P<path>.*)$', serve, {"document_root":MEDIA_ROOT}),
 

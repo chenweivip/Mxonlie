@@ -14,12 +14,15 @@ class Course(models.Model):
     desc = models.CharField(max_length=300, verbose_name=u"课程描述")
     detail = models.TextField(verbose_name=u'课程详情')
     degree = models.CharField(choices=(("cj", u'初级'), ('zj', u'中级'), ('gj', u'高级')), max_length=2,verbose_name=u'难度')
+    # get_degree_display用户在前端显示choices字段，如果不用這个,默认显示cj,zj
     learn_times = models.IntegerField(default=0, verbose_name=u'学习时长(分钟数)')
     students = models.IntegerField(default=0,verbose_name=u'学习人数')
     fav_nums = models.IntegerField(default=0, verbose_name=u'收藏人数')
+    category = models.CharField(default=u'后端开发', max_length=20, verbose_name=u'课程类别')
     image = models.ImageField(upload_to='course/%Y/%m', verbose_name=u'封面图', max_length=100)
     click_nums = models.IntegerField(default=0, verbose_name=u'点击数')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+    tag = models.CharField(default='',verbose_name=u'课程标签',max_length=10)
 
     def __unicode__(self):
         return self.name
@@ -27,6 +30,14 @@ class Course(models.Model):
     class Meta:
         verbose_name = u'课程'
         verbose_name_plural = verbose_name
+
+    def get_zj_nums(self):
+        """获取章节数"""
+        return self.lesson_set.all().count()
+
+    def get_learn_users(self):
+        """取出学习用户"""
+        return self.usercourse_set.all()[:5]
 
 
 class Lesson(models.Model):
