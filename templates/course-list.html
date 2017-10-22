@@ -8,7 +8,7 @@
 <section>
         <div class="wp">
             <ul  class="crumbs">
-                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'index' %}">首页</a>></li>
                 <li>公开课</li>
             </ul>
         </div>
@@ -91,12 +91,12 @@
         {% for hot_course in hot_courses %}
             <dl>
 						<dt>
-							<a target="_blank" href="">
+							<a target="_blank" href="{% url 'course:course_detail' hot_course.id %}">
 								<img width="240" height="220" class="scrollLoading" src="{{ MEDIA_URL }}{{ hot_course.image }}"/>
 							</a>
 						</dt>
 						<dd>
-							<a target="_blank" href=""><h2> {{ hot_course.name }}</h2></a>
+							<a target="_blank" href="{% url 'course:course_detail' hot_course.id %}"><h2> {{ hot_course.name }}</h2></a>
 							<span class="fl">难度：<i class="key">{{ hot_course.get_degree_display }}</i></span>  <!--get_degree_display专门针对choice字段显示的-->
 						</dd>
 					</dl>

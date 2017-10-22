@@ -23,6 +23,7 @@ class CityDict(models.Model):
 class CourseOrg(models.Model):
     name = models.CharField(max_length=50, verbose_name=u'机构名称')
     desc = models.TextField(verbose_name=u'机构描述')
+    tag = models.CharField(default='全国知名', max_length=10, verbose_name=u'机构标签')
     click_nums = models.IntegerField(default=0, verbose_name=u'点击数')
     fav_nums = models.IntegerField(default=0, verbose_name=u'点赞数')
     image = models.ImageField(upload_to="org/%Y/%m", verbose_name=u'封面图')
@@ -56,12 +57,15 @@ class Teacher(models.Model):
     fav_nums = models.IntegerField(default=0, verbose_name=u'点赞数')
     image = models.ImageField(default='', upload_to="teacher/%Y/%m", verbose_name=u'头像')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
+    age = models.IntegerField(default=18, verbose_name=u'年龄')
 
     def __unicode__(self):
         return self.name
 
-
     class Meta:
         verbose_name = u'教师'
         verbose_name_plural = verbose_name
+
+    def get_course_nums(self):
+        return self.course_set.all().count()
 

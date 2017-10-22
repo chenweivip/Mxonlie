@@ -9,9 +9,9 @@
     <div class="wp">
         <div class="crumbs">
             <ul>
-                <li><a href="index.html">首页</a>></li>
+                <li><a href="{% url 'index' %}">首页</a>></li>
                 <li><a href="{% url 'course:course_list' %}">公开课程</a>></li>
-                <li>课程详情</li>
+                <li><a href="{% url 'course:course_detail' course.id %}">课程详情</a></li>
             </ul>
         </div>
     </div>
@@ -34,7 +34,7 @@
 
                         </div>
                         <div class="des">
-                            <h1 title="django 从入门到精通体验开始了">{{ course.name }}</h1>
+                            <h1 title="{{ course.name }}">{{ course.name }}</h1>
                             <span class="key">{{ course.desc }}</span>
                             <div class="prize">
                                 <span class="fl">难度：<i class="key">{{ course.get_degree_display }}</i></span>
@@ -55,7 +55,7 @@
                                 <div class="btn colectgroupbtn" id="jsLeftBtn">
                                     {% if has_fav_org %}已收藏{% else %}收藏{% endif %}
                                 </div>
-                                <div class="buy btn"><a style="color: white" href="course-video.html">开始学习</a></div>
+                                <div class="buy btn"><a style="color: white" href="{% url 'course:course_info' course.id %}">开始学习</a></div>
                             </div>
                         </div>
                         <div class="group-share-box">
@@ -80,15 +80,15 @@
                             <p>世界名校，课程权威</p>
                         </div>
                         <div class="pic">
-                            <a href="/company/14/">
+                            <a href="/company/{{ course.id }}/">
                                 <img width="150" height="80" src="{{ MEDIA_URL }}{{ course.course_org.image }}"/>
                             </a>
                         </div>
-                        <a href="/company/14/">
-                            <h2 class="center" title="清华大学">{{ course.course_org.name }}</h2>
+                        <a href="/company/{{ course.id }}/">
+                            <h2 class="center" title="{{ course.course_org.name }}">{{ course.course_org.name }}</h2>
                         </a>
                         <div class="btn  notlogin
-                             " data-favid="14" id="jsRightBtn">
+                             " data-favid="{{ course.id }}" id="jsRightBtn">
                             {% if has_fav_course %}已收藏{% else %}收藏{% endif %}
 
                         </div>
@@ -167,26 +167,6 @@
                                 <td width="53" valign="top"><br/></td>
                                 <td width="53" valign="top"><br/></td>
                             </tr>
-                            <tr>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                            </tr>
-                            <tr>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                                <td width="53" valign="top"><br/></td>
-                            </tr>
                             </tbody>
                         </table>
 
@@ -206,13 +186,13 @@
     {% for relate_course in relate_courses %}
          <dl>
                             <dt>
-                                <a target="_blank" href="">
+                                <a target="_blank" href="{% url 'course:course_detail' relate_course.id %}">
                                     <img width="240" height="220" class="scrollLoading"
                                          src="{{ MEDIA_URL }}{{ relate_course.image }}"/>
                                 </a>
                             </dt>
                             <dd>
-                                <a target="_blank" href=""><h2> {{ relate_course.name }}</h2></a>
+                                <a target="_blank" href="{% url 'course:course_detail' relate_course.id %}"><h2> {{ relate_course.name }}</h2></a>
                                 <span class="fl">学习时长：<i class="key">{{ relate_course.learn_times }}</i></span>
                             </dd>
                         </dl>
@@ -231,7 +211,7 @@
 {% block custom_js %}
 
 <script type="text/javascript">
-    //收藏分享
+    //教师收藏分享
     function add_fav(current_elem, fav_id, fav_type) {
         $.ajax({
             type: "POST",
@@ -257,7 +237,6 @@
     }
 
     $('#jsLeftBtn').on('click', function () {
-        alert(123)
         add_fav($(this), {{ course.id }}, 1);
 
     });

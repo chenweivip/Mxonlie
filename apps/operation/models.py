@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 from __future__ import unicode_literals
 from datetime import datetime
 
@@ -13,7 +13,7 @@ from users.models import UserProfile
 class UserAsk(models.Model):
     name = models.CharField(max_length=20, verbose_name=u'姓名')
     mobile = models.CharField(max_length=11, verbose_name=u'手机')
-    course_name = models.CharField(max_length=50,verbose_name=u'课程')
+    course_name = models.CharField(max_length=50, verbose_name=u'课程')
     add_time = models.DateTimeField(default=datetime.now,verbose_name=u'添加时间')
 
     class Meta:
@@ -57,6 +57,7 @@ class UserMessage(models.Model):
 class UserCourse(models.Model):
     user = models.ForeignKey(UserProfile, verbose_name=u'用户')
     course = models.ForeignKey(Course, verbose_name=u'课程')
+    learn_times = models.IntegerField(default=0, verbose_name=u'学习时长(分钟数)')
     add_time = models.DateTimeField(default=datetime.now, verbose_name=u'添加时间')
 
     class Meta:

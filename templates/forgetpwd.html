@@ -25,6 +25,7 @@
     <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png'%}"/></div>
     <p class="green">请输入新密码</p>
     <form id="jsSetNewPwdForm">
+        {% csrf_token %}
         <div class="box">
             <span class="word2">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</span>
             <input type="password" name="password" id="jsResetPwd" placeholder="请输入新密码"/>
@@ -42,7 +43,6 @@
             <input type="hidden" name="mobile" id="jsInpResetMobil" />
             <input id="jsSetNewPwdBtn" type="button" value="提交" />
         </div>
-        <input type='hidden' name='csrfmiddlewaretoken' value='mymQDzHWl2REXIfPMg2mJaLqDfaS1sD5' />
     </form>
 </div>
 <div class="bg" id="dialogBg"></div>
@@ -52,8 +52,8 @@
             <p class="fl hd-tips">慕学网，在线学习平台！</p>
             <ul class="fr hd-bar">
                 <li>服务电话：<span>33333333</span></li>
-                <li><a href="login.html">[登录]</a></li>
-                <li class="active"><a href="/forgetpwd/">[忘记密码]</a></li>
+                <li><a href="{% url 'login' %}">[登录]</a></li>
+                <li class="active"><a href="{% url 'forget_pwd' %}">[忘记密码]</a></li>
             </ul>
         </div>
     </div>
@@ -62,9 +62,9 @@
     <div class="c-box bg-box">
         <div class="login-box clearfix">
             <div class="hd-login clearfix">
-                <a class="index-logo" href="index.html"></a>
+                <a class="index-logo" href="{% url 'index' %}"></a>
                 <h1>忘记密码</h1>
-                <a class="index-font" href="index.html">回到首页</a>
+                <a class="index-font" href="{% url 'index' %}">回到首页</a>
             </div>
             <div class="fl slide">
                 <div class="imgslide">
@@ -80,10 +80,9 @@
             <div class="fl form-box">
                 <h2>忘记密码</h2>
                 <form id="jsFindPwdForm" method="post" action="{% url 'forget_pwd' %}" autocomplete="off">
-                    <input type='hidden' name='csrfmiddlewaretoken' value='mymQDzHWl2REXIfPMg2mJaLqDfaS1sD5' />
                     <div class="form-group marb20 {% if forget_form.errors.password %}errorput{% endif %}">
                         <label>帐&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
-                        <input type="text" id="account" name="email" value="{{ forget_form.email.value }}" placeholder="邮箱" />
+                        <input type="text" id="account" name="email" value="{{ forget_form.email.value|default_if_none:'' }}" placeholder="邮箱" />
                     </div>
                     <div class="form-group captcha1 marb38 {% if forget_form.errors.password %}errorput{% endif %}">
                         <label>验&nbsp;证&nbsp;码</label>
@@ -93,7 +92,6 @@
                     <input type="hidden" name="sms_type" value="1">
                     <input class="btn btn-green" id="jsFindPwdBtn" type="submit" value="提交" />
                     <p class="form-p" style="bottom:40px;">您还可以<a href="{% url 'login' %}"> [直接登录]</a></p>
-                <input type='hidden' name='csrfmiddlewaretoken' value='5I2SlleZJOMUX9QbwYLUIAOshdrdpRcy' />
                     {% csrf_token %}
                 </form>
             </div>

@@ -6,6 +6,7 @@
 import xadmin
 from models import *
 
+
 class UserAskAdmin(object):
     list_display = ['name','mobile','course_name','add_time']
     search_fields = ['name','mobile','course_name','add_time']

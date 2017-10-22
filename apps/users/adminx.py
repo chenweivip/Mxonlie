@@ -35,6 +35,6 @@ class BannerAdmin(object):
 
 xadmin.site.register(EmailVerifyRecord, EmailVerifyRecordAdmin)
 xadmin.site.register(Banner, BannerAdmin)
-xadmin.site.register(views.BaseAdminView, BaseSetting) # 全局注册方式
+xadmin.site.register(views.BaseAdminView, BaseSetting)# 全局注册方式
 xadmin.site.register(views.CommAdminView, GlobalSetting)
 

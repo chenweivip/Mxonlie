@@ -10,7 +10,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class UserProfile(AbstractUser):
-    nick_name = models.CharField(max_length=50,verbose_name=u'昵称', default="")
+    nick_name = models.CharField(max_length=50, verbose_name=u'昵称', default="")
     birthday = models.DateField(verbose_name=u'生日', null=True, blank=True)
     gender = models.CharField(choices=(("male", u"男"), ("female", u"女")), default='female', max_length=6)
     address = models.CharField(max_length=100, default=u"")
@@ -24,11 +24,16 @@ class UserProfile(AbstractUser):
     def __unicode__(self):
         return self.username
 
+    def get_unread_nums(self):
+        """获取用户未读消息数量"""
+        from operation.models import UserMessage
+        return UserMessage.objects.filter(user=self.id,has_read=False).count()
+
 
 class EmailVerifyRecord(models.Model):
     code = models.CharField(max_length=20, verbose_name=u'验证码')
     email = models.EmailField(max_length=50, verbose_name=u'邮箱')
-    send_type = models.CharField(max_length=10, choices=(("register", u'注册'),("forget", u"找回密码")),verbose_name=u'验证码类型')
+    send_type = models.CharField(max_length=30, choices=(("register", u'注册'),("forget", u"找回密码"),("update_email",u'修改邮箱')),verbose_name=u'验证码类型')
     send_time = models.DateTimeField(default=datetime.now,verbose_name=u'发送时间')  # 注意去掉时间
 
     def __unicode__(self):

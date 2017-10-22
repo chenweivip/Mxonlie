@@ -28,7 +28,7 @@ SECRET_KEY = '$z5@_gq2kvf3^k^&+!ccr=8^cwr40i7i)9a5ptlsol=wv=vc@f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []  # ALLOWED_HOSTS = ['*'] DEBUG设置为false时,这样设置
 
 
 # Application definition
@@ -157,3 +157,6 @@ EMAIL_FROM = "m13521373352@163.com"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static') 当DEBUG=True要手动配置静态文件
